@@ -37,17 +37,6 @@ describe('changed', function () {
       });
     });
 
-    it('fires an error event when the response code is not 200', function (done) {
-      nock('http://www.example.com').get('/').reply(404, 'Not found');
-
-      resource.tick();
-
-      resource.on('error', function (error) {
-        assert.equal(error.message, 'Request for http://www.example.com failed with status code: 404');
-        done();
-      });
-    });
-
     describe('when a custom compare function is used', function () {
 
       beforeEach(function () {
