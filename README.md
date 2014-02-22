@@ -44,23 +44,27 @@ The `options` object supports all of the standard options from [http.request](ht
 
 * `compare` - _function_ - overrides the default respone body comparison. Receives the current response body as its first argument and the previous response body as its second argument. Should return `true` if the response bodies differ.
 
+---
 
 #### `.startPolling(interval)`
 
 Start polling the resource for changes.
 
-#### Parameters
+##### Parameters
 
 * `interval` - _number_ - the interval time in milliseconds (default `10000`)
+
+---
 
 #### `.stopPolling()`
 
 Stop polling the resource.
 
+---
 
 ### Events
 
-#### `changed`
+##### `changed`
 
 Fired when the resource's body changes.
 
@@ -71,7 +75,7 @@ resource.on('changed', function (current, previous) {
 });
 ```
 
-#### `error`
+##### `error`
 
 Fired when an error occurs.
 
