@@ -35,7 +35,7 @@ util.inherits(Resource, EventEmitter);
 };
 
 /**
- * Start polling the resource.
+ * Stop polling the resource.
  */
  Resource.prototype.stopPolling = function () {
   clearInterval(this._interval);
