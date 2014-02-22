@@ -13,6 +13,7 @@ var DEFAULT_INTERVAL = 10000;
 function Resource(url, options) {
   this.url = url;
   this.options = options || {};
+  this.logger = module.exports.logger || console;
 }
 
 util.inherits(Resource, EventEmitter);
@@ -53,6 +54,8 @@ util.inherits(Resource, EventEmitter);
   compare = compare || function (current, previous) {
     return current !== previous; 
   };
+
+  this.logger.info('Fetching resource: ' + this.url);
 
   http.get(this.url, this.options, function (err, body) {
     if (err) return changed.emit('error', err);

@@ -23,7 +23,7 @@ var changed = require('changed');
 var resource = new changed.Resource('http://www.example.com');
 
 resource.on('changed', function (current, previous) {
-  console.log('Resource changed. Response body was ' + previous + ' , is now' + current + '.');
+  console.log('Resource changed. Response body was ' + previous + ' , is now ' + current + '.');
 });
 
 resource.startPolling(5000);
@@ -79,6 +79,17 @@ Fired when an error occurs.
 resource.on('error', function (error) {
   // `error` is an Error object
 });
+```
+
+## Logging
+
+By default _changed_ will log polling requests using `console.info`. To use a custom logger, like [Winston](https://github.com/flatiron/winston), just set the `changed.logger` property:
+
+```javascript
+var changed = require('changed');
+var winston = require('winston');
+
+changed.logger = winston;
 ```
 
 ## Examples

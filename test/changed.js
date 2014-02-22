@@ -9,6 +9,10 @@ describe('changed', function () {
     var resource;
 
     beforeEach(function () {
+      // silence logging for tests
+      changed.logger = {
+        info: function () {}
+      };
       resource = new changed.Resource('http://www.example.com');
     });
 
@@ -36,6 +40,23 @@ describe('changed', function () {
 
         resource.on('error', function (error) {
           assert.equal(error.message, 'Request for http://www.example.com failed with status code: 404');
+          done();
+        });
+      });
+
+      it('logs requests', function (done) {
+        var output = '';
+
+        nock('http://www.example.com').get('/').reply(200, 'Not found');
+
+        resource.logger = {
+          info: function (message) {
+            output += message;
+          }
+        };
+
+        resource.tick(function () {
+          assert.equal(output, 'Fetching resource: http://www.example.com');
           done();
         });
       });
