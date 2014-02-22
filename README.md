@@ -87,7 +87,7 @@ resource.on('error', function (error) {
 
 ## Logging
 
-By default _changed_ will log polling requests using `console.info`. To use a custom logger, like [Winston](https://github.com/flatiron/winston), just set the `changed.logger` property:
+All polling requests are logged using `console.info` by default. To use a custom logger, like [Winston](https://github.com/flatiron/winston), just set the `changed.logger` property:
 
 ```javascript
 var changed = require('changed');
@@ -100,17 +100,17 @@ changed.logger = winston;
 
 ### Custom response comparison
 
-In the following example the `changed` event is only fired when the `someProperty` property in a JSON response changes.
+In the following example the `changed` event is only fired when the `foo` property in a JSON response changes.
 
 ```javascript
-var Changed = require('changed');
+var changed = require('changed');
 
-var resource = new Changed('http://www.example.com/some/json/file.json', {
+var resource = new changed.Resource('http://www.example.com/some/json/file.json', {
   compare: function (current, previous) {
     var currentJson = JSON.parse(current);
     var previousJson = JSON.parse(previous);
     
-    return (currentJson.someProperty !== previousJson.someProperty);
+    return (currentJson.foo !== previousJson.foo);
   }
 });
 
