@@ -42,7 +42,7 @@ resource.startPolling(5000);
 
 The `options` object supports all of the standard options from [http.request](http://nodejs.org/api/http.html#http_http_request_options_callback) and [https.request](http://nodejs.org/api/https.html#https_https_request_options_callback). In addition, it supports the following properties:
 
-* `compare` - _function_ - overrides the default respone body comparison. Receives the current response body as its first argument and the previous response body as its second argument. Should return `true` if the response bodies differ.
+* `compare` - _function_ - overrides the default response body comparison. Receives the current response body as its first argument and the previous response body as its second argument. Should return `true` if the responses differ.
 
 ---
 
@@ -82,6 +82,17 @@ Fired when an error occurs.
 ```javascript
 resource.on('error', function (error) {
   // `error` is an Error object
+});
+```
+
+##### `response`
+
+Fired each time a response is received whilst polling.
+
+```javascript
+resource.on('response', function (body, res) {
+  // `body` is a string containig the response body
+  // `res` is the http/https response object
 });
 ```
 

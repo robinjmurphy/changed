@@ -13,7 +13,7 @@ var DEFAULT_INTERVAL = 10000;
 function Resource(url, options) {
   this.url = url;
   this.options = options || {};
-  this.logger = module.exports.logger || console;
+  this.logger = module.exports.logger;
 }
 
 util.inherits(Resource, EventEmitter);
@@ -23,14 +23,14 @@ util.inherits(Resource, EventEmitter);
  * @param {number} interval - polling interval in milliseconds (default 10000)
  */
  Resource.prototype.startPolling = function (interval) {
-  var changed = this;
+  var resource = this;
   
   interval = interval || DEFAULT_INTERVAL;
 
   this.update();
 
   this._interval = setInterval(function () {
-    changed.update();
+    resource.update();
   }, interval);
 };
 
@@ -47,7 +47,7 @@ util.inherits(Resource, EventEmitter);
  * @param {function} - optional callback for testing
  */
  Resource.prototype.update = function (cb) {
-  var changed = this;
+  var resource = this;
   var compare = this.options.compare;
   var previous = this.current;
 
@@ -57,14 +57,16 @@ util.inherits(Resource, EventEmitter);
 
   this.logger.info('Fetching resource: ' + this.url);
 
-  http.get(this.url, this.options, function (err, body) {
-    if (err) return changed.emit('error', err);
+  http.get(this.url, this.options, function (err, body, res) {
+    if (err) return resource.emit('error', err);
+
+    resource.emit('response', body, res);
 
     if (previous && (compare(body, previous) === true)) {
-      changed.emit('changed', body, previous);
+      resource.emit('changed', body, previous);
     }
 
-    changed.current = body;
+    resource.current = body;
 
     if (cb) {
       cb();
@@ -76,3 +78,8 @@ util.inherits(Resource, EventEmitter);
  * Expose `Resource`.
  */
 module.exports.Resource = Resource;
+
+/**
+ * Expose `logger` and set default to `console`
+ */
+module.exports.logger = console;

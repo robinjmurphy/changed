@@ -18,6 +18,17 @@ describe('changed', function () {
 
     describe('.update', function () {
 
+      it('fires a response event when a response is received', function (done) {
+        nock('http://www.example.com').get('/').reply(200, 'Hello World');
+
+        resource.on('response', function (body) {
+          assert.equal(body, 'Hello World');
+          done();
+        });
+        
+        resource.update();
+      });
+
       it('fires a changed event when the response body has changed', function (done) {
         nock('http://www.example.com').get('/').reply(200, 'Hello');
 
