@@ -13,7 +13,7 @@ var DEFAULT_INTERVAL = 10000;
  */
 function Changed(url, interval, options) {
   this.url = url;
-  this.interval = interval;
+  this.interval = interval || DEFAULT_INTERVAL;
   this.options = options || {};
 }
 
@@ -55,7 +55,6 @@ Changed.prototype.tick = function (cb) {
 
   http.get(this.url, this.options, function (err, body) {
     if (err) return changed.emit('error', err);
-
 
     if (previous && (compare(body, previous) === true)) {
       changed.emit('changed', body, previous);
