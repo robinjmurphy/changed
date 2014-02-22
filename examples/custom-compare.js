@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 
-var Changed = require('..');
+var changed = require('..');
 
-var resource = new Changed('http://www.example.com', 5000, {
+var resource = new changed.Resource('http://www.example.com', 5000, {
   compare: function (current, previous) {
     return (current.length !== previous.length);
   }
