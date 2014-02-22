@@ -82,7 +82,7 @@ resource.on('error', function (error)) {
 
 ### Custom response comparison
 
-In the following example the `changed` event is only fired when a specific property in a JSON response changes.
+In the following example the `changed` event is only fired when the `someProperty` property in a JSON response changes.
 
 ```javascript
 var Changed = require('changed');
