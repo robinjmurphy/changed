@@ -1,3 +1,6 @@
 examples
 test
 node_modules
+.travis.yml
+Makefile
+README.md
