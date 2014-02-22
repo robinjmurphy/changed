@@ -69,6 +69,6 @@ Changed.prototype.tick = function (cb) {
 };
 
 /**
- * Expost `Changed` constructor.
+ * Expose `Changed` constructor.
  */
 module.exports = Changed;
