@@ -12,7 +12,7 @@ Polls HTTP resources and fires events when they change.
 ## Installation
 
 ```
-npm install --save robinjmurphy/changed
+npm install robinjmurphy/changed
 ```
 
 ## Usage
