@@ -11,18 +11,18 @@ var DEFAULT_INTERVAL = 10000;
  * @param {object} options
  * @param {function} options.compare - custom comparison function, recieves current and previous response bodies
  */
-function Changed(url, interval, options) {
+function Resource(url, interval, options) {
   this.url = url;
   this.interval = interval || DEFAULT_INTERVAL;
   this.options = options || {};
 }
 
-util.inherits(Changed, EventEmitter);
+util.inherits(Resource, EventEmitter);
 
 /**
  * Start polling the resource.
  */
-Changed.prototype.startPolling = function () {
+ Resource.prototype.startPolling = function () {
   var changed = this;
 
   this.tick();
@@ -35,7 +35,7 @@ Changed.prototype.startPolling = function () {
 /**
  * Start polling the resource.
  */
-Changed.prototype.stopPolling = function () {
+ Resource.prototype.stopPolling = function () {
   clearInterval(this._interval);
 };
 
@@ -44,7 +44,7 @@ Changed.prototype.stopPolling = function () {
  * contents have changed.
  * @param {function} - optional callback for testing
  */
-Changed.prototype.tick = function (cb) {
+ Resource.prototype.tick = function (cb) {
   var changed = this;
   var compare = this.options.compare;
   var previous = this.current;
@@ -69,6 +69,6 @@ Changed.prototype.tick = function (cb) {
 };
 
 /**
- * Expose `Changed` constructor.
+ * Expose `Resource`.
  */
-module.exports = Changed;
+module.exports.Resource = Resource;
