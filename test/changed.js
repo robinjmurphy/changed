@@ -43,7 +43,7 @@ describe('changed', function () {
       describe('when a custom compare function is used', function () {
 
         beforeEach(function () {
-          resource = new changed.Resource('http://www.example.com', 5000, {
+          resource = new changed.Resource('http://www.example.com', {
             compare: function (current, previous) {
               return (JSON.parse(current).a !== JSON.parse(previous).a);
             }

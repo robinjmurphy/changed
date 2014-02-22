@@ -2,7 +2,7 @@
 
 var changed = require('..');
 
-var resource = new changed.Resource('http://www.example.com', 5000, {
+var resource = new changed.Resource('http://www.example.com', {
   compare: function (current, previous) {
     return (current.length !== previous.length);
   }
@@ -16,4 +16,4 @@ resource.on('error', function (error) {
   console.error(error.message);
 });
 
-resource.startPolling();
+resource.startPolling(5000);

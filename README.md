@@ -20,23 +20,22 @@ npm install --save robinjmurphy/changed
 ```javascript
 var changed = require('changed');
 
-var resource = new changed.Resource('http://www.example.com', 5000);
+var resource = new changed.Resource('http://www.example.com');
 
 resource.on('changed', function (current, previous) {
   console.log('Resource changed. Response body was ' + previous + ' , is now' + current + '.');
 });
 
-resource.startPolling();
+resource.startPolling(5000);
 ```
 
 ## API
 
-#### `new changed.Resource(url, interval, options)`
+#### `new changed.Resource(url, options)`
 
 ##### Parameters
 
 * `url` - _string_
-* `interval` - _number_ - the interval time in milliseconds (default `10000`)
 * `options` - _object_ - configuration options
 
 ##### Options
@@ -46,9 +45,13 @@ The `options` object supports all of the standard options from [http.request](ht
 * `compare` - _function_ - overrides the default respone body comparison. Receives the current response body as its first argument and the previous response body as its second argument. Should return `true` if the response bodies differ.
 
 
-#### `.startPolling()`
+#### `.startPolling(interval)`
 
-Start polling the resource.
+Start polling the resource for changes.
+
+#### Parameters
+
+* `interval` - _number_ - the interval time in milliseconds (default `10000`)
 
 #### `.stopPolling()`
 
@@ -87,7 +90,7 @@ In the following example the `changed` event is only fired when the `somePropert
 ```javascript
 var Changed = require('changed');
 
-var resource = new Changed('http://www.example.com/some/json/file.json', 5000, {
+var resource = new Changed('http://www.example.com/some/json/file.json', {
   compare: function (current, previous) {
     var currentJson = JSON.parse(current);
     var previousJson = JSON.parse(previous);
@@ -95,4 +98,6 @@ var resource = new Changed('http://www.example.com/some/json/file.json', 5000, {
     return (currentJson.someProperty !== previousJson.someProperty);
   }
 });
+
+resource.startPolling(5000);
 ```

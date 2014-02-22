@@ -7,29 +7,30 @@ var DEFAULT_INTERVAL = 10000;
 /**
  * @constructor
  * @param {string} url
- * @param {number} interval - polling interval in milliseconds (default 10000)
  * @param {object} options
  * @param {function} options.compare - custom comparison function, recieves current and previous response bodies
  */
-function Resource(url, interval, options) {
+function Resource(url, options) {
   this.url = url;
-  this.interval = interval || DEFAULT_INTERVAL;
   this.options = options || {};
 }
 
 util.inherits(Resource, EventEmitter);
 
 /**
- * Start polling the resource.
+ * Start polling the resource for changes.
+ * @param {number} interval - polling interval in milliseconds (default 10000)
  */
- Resource.prototype.startPolling = function () {
+ Resource.prototype.startPolling = function (interval) {
   var changed = this;
+  
+  interval = interval || DEFAULT_INTERVAL;
 
   this.tick();
 
   this._interval = setInterval(function () {
     changed.tick();
-  }, this.interval);
+  }, interval);
 };
 
 /**
