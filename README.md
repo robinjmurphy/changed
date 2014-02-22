@@ -22,9 +22,9 @@ var Changed = require('changed');
 
 var resource = new Changed('http://www.example.com', 5000);
 
-resource.on('changed', function (current, previous)) {
+resource.on('changed', function (current, previous) {
   console.log('Resource changed. Response body was ' + previous + ' , is now' + current + '.');
-}
+});
 
 resource.startPolling();
 ```
@@ -62,10 +62,10 @@ Stop polling the resource.
 Fired when the resource's body changes.
 
 ```javascript
-resource.on('changed', function (current, previous)) {
+resource.on('changed', function (current, previous) {
   // `current` is a string containing the curent response body
   // `previous` is a string containing previous response body 
-}
+});
 ```
 
 #### `error`
@@ -73,9 +73,9 @@ resource.on('changed', function (current, previous)) {
 Fired when an error occurs.
 
 ```javascript
-resource.on('error', function (error)) {
+resource.on('error', function (error) {
   // `error` is an Error object
-}
+});
 ```
 
 ## Examples
