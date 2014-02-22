@@ -18,9 +18,9 @@ npm install --save robinjmurphy/changed
 ## Usage
 
 ```javascript
-var Changed = require('changed');
+var changed = require('changed');
 
-var resource = new Changed('http://www.example.com', 5000);
+var resource = new changed.Resource('http://www.example.com', 5000);
 
 resource.on('changed', function (current, previous) {
   console.log('Resource changed. Response body was ' + previous + ' , is now' + current + '.');
@@ -31,12 +31,12 @@ resource.startPolling();
 
 ## API
 
-#### `new Changed(url, interval, options)`
+#### `new changed.Resource(url, interval, options)`
 
 ##### Parameters
 
 * `url` - _string_
-* `interal` - _number_ - the interval time in milliseconds (default `10000`)
+* `interval` - _number_ - the interval time in milliseconds (default `10000`)
 * `options` - _object_ - configuration options
 
 ##### Options
