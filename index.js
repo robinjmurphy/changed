@@ -27,10 +27,10 @@ util.inherits(Resource, EventEmitter);
   
   interval = interval || DEFAULT_INTERVAL;
 
-  this.tick();
+  this.update();
 
   this._interval = setInterval(function () {
-    changed.tick();
+    changed.update();
   }, interval);
 };
 
@@ -46,7 +46,7 @@ util.inherits(Resource, EventEmitter);
  * contents have changed.
  * @param {function} - optional callback for testing
  */
- Resource.prototype.tick = function (cb) {
+ Resource.prototype.update = function (cb) {
   var changed = this;
   var compare = this.options.compare;
   var previous = this.current;

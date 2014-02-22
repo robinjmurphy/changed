@@ -16,14 +16,14 @@ describe('changed', function () {
       resource = new changed.Resource('http://www.example.com');
     });
 
-    describe('.tick', function () {
+    describe('.update', function () {
 
       it('fires a changed event when the response body has changed', function (done) {
         nock('http://www.example.com').get('/').reply(200, 'Hello');
 
-        resource.tick(function () {
+        resource.update(function () {
           nock('http://www.example.com').get('/').reply(200, 'Hello World');
-          resource.tick();
+          resource.update();
         });
 
         resource.on('changed', function (current, previous) {
@@ -36,7 +36,7 @@ describe('changed', function () {
       it('fires an error event when the response code is not 200', function (done) {
         nock('http://www.example.com').get('/').reply(404, 'Not found');
 
-        resource.tick();
+        resource.update();
 
         resource.on('error', function (error) {
           assert.equal(error.message, 'Request for http://www.example.com failed with status code: 404');
@@ -55,7 +55,7 @@ describe('changed', function () {
           }
         };
 
-        resource.tick(function () {
+        resource.update(function () {
           assert.equal(output, 'Fetching resource: http://www.example.com');
           done();
         });
@@ -77,9 +77,9 @@ describe('changed', function () {
 
             nock('http://www.example.com').get('/').reply(200, '{"a": "b", "c": "d"}');
 
-            resource.tick(function () {
+            resource.update(function () {
               nock('http://www.example.com').get('/').reply(200, '{"a": "z", "c": "d"}');
-              resource.tick();
+              resource.update();
             });
 
             resource.on('changed', function (current, previous) {
@@ -98,9 +98,9 @@ describe('changed', function () {
             
             nock('http://www.example.com').get('/').reply(200, '{"a": "b", "c": "d"}');
 
-            resource.tick(function () {
+            resource.update(function () {
               nock('http://www.example.com').get('/').reply(200, '{"a": "b", "c": "e"}');
-              resource.tick(function () {
+              resource.update(function () {
                 assert.equal(false, eventFired, 'changed event should not have fired');
                 done();
               });
