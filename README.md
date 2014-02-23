@@ -18,7 +18,7 @@ npm install robinjmurphy/changed
 ## Usage
 
 ```javascript
-var changed = require('changed');
+var changed = require('changed-http');
 
 var resource = new changed.Resource('http://www.example.com');
 
@@ -101,7 +101,7 @@ resource.on('response', function (body, res) {
 All polling requests are logged using `console.info` by default. To use a custom logger, like [Winston](https://github.com/flatiron/winston), just set the `changed.logger` property:
 
 ```javascript
-var changed = require('changed');
+var changed = require('changed-http');
 var winston = require('winston');
 
 changed.logger = winston;
@@ -114,7 +114,7 @@ changed.logger = winston;
 In the following example the `changed` event is only fired when the `foo` property in a JSON response changes.
 
 ```javascript
-var changed = require('changed');
+var changed = require('changed-http');
 
 var resource = new changed.Resource('http://www.example.com/some/json/file.json', {
   compare: function (current, previous) {
