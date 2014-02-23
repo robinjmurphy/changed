@@ -1,5 +1,6 @@
 var assert = require('assert');
 var nock = require('nock');
+var sinon = require('sinon');
 var changed = require('..');
 
 describe('changed', function () {
@@ -7,12 +8,13 @@ describe('changed', function () {
   describe('Resource', function () {
 
     var resource;
+    var logger;
 
     beforeEach(function () {
-      // silence logging for tests
-      changed.logger = {
-        info: function () {}
+      logger = {
+        info: sinon.spy()
       };
+      changed.logger = logger;
       resource = new changed.Resource('http://www.example.com');
     });
 
@@ -56,18 +58,10 @@ describe('changed', function () {
       });
 
       it('logs requests', function (done) {
-        var output = '';
-
         nock('http://www.example.com').get('/').reply(200, 'Not found');
 
-        resource.logger = {
-          info: function (message) {
-            output += message;
-          }
-        };
-
         resource.update(function () {
-          assert.equal(output, 'Fetching resource: http://www.example.com');
+          assert.ok(logger.info.calledWith('Fetching resource: http://www.example.com'));
           done();
         });
       });
