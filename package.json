@@ -1,5 +1,5 @@
 {
-  "name": "changed",
+  "name": "changed-http",
   "version": "0.0.1",
   "description": "Polls HTTP resources and fires events when they change",
   "main": "index.js",
