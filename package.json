@@ -1,6 +1,6 @@
 {
   "name": "changed-http",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Polls HTTP resources and fires events when they change",
   "main": "index.js",
   "scripts": {
@@ -22,12 +22,12 @@
   },
   "homepage": "https://github.com/robinjmurphy/changed",
   "devDependencies": {
-    "mocha": "^1.17.1",
-    "nock": "^0.27.2",
-    "winston": "^0.7.2",
-    "aws-sdk": "^2.0.0-rc9",
-    "diff": "^1.0.8",
-    "sinon": "^1.8.2"
+    "mocha": "~1.17.1",
+    "nock": "~0.27.2",
+    "winston": "~0.7.2",
+    "aws-sdk": "~2.0.0-rc9",
+    "diff": "~1.0.8",
+    "sinon": "~1.8.2"
   },
   "dependencies": {
     "lodash": "~2.4.0"
