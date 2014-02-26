@@ -8,6 +8,7 @@ Polls HTTP resources and fires events when they change.
 
 * Supports HTTP and HTTPS
 * Transparently decodes gzipped resources
+* Supports the `http_proxy` and `https_proxy` environment variables
 
 ## Installation
 
