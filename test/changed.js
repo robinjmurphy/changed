@@ -15,7 +15,13 @@ describe('changed', function () {
         info: sinon.spy()
       };
       changed.logger = logger;
+      changed.proxy = null;
       resource = new changed.Resource('http://www.example.com');
+    });
+
+    afterEach(function () {
+      delete process.env.http_proxy;
+      delete process.env.https_proxy;
     });
 
     describe('.update', function () {
@@ -58,12 +64,33 @@ describe('changed', function () {
       });
 
       it('logs requests', function (done) {
-        nock('http://www.example.com').get('/').reply(200, 'Not found');
+        nock('http://www.example.com').get('/').reply(200);
 
         resource.update(function () {
           assert.ok(logger.info.calledWith('Fetching resource: http://www.example.com'));
           done();
         });
+      });
+
+      it('uses the http_proxy environment variable for requests when it is set', function () {
+        var proxyRequest = nock('http://proxy.com:8080').get('/http://www.example.com').reply(200);
+
+        process.env.http_proxy = 'http://proxy.com:8080';
+
+        resource.update();
+
+        proxyRequest.done();
+      });
+
+      it('uses the https_proxy environment variable for requests when it is set', function () {
+        var proxyRequest = nock('http://proxy.com:8080').get('/https://www.example.com').reply(200);
+        
+        resource = new changed.Resource('https://www.example.com');
+        process.env.https_proxy = 'http://proxy.com:8080';
+
+        resource.update();
+
+        proxyRequest.done();
       });
 
       describe('when a custom compare function is used', function () {
