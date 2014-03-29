@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/robinjmurphy/changed.png?branch=master)](https://travis-ci.org/robinjmurphy/changed) [![Code Climate](https://codeclimate.com/github/robinjmurphy/changed.png)](https://codeclimate.com/github/robinjmurphy/changed)
 
-Polls HTTP resources and fires events when they change.
+> Polls HTTP resources and fires events when they change.
 
 ## Features
 
